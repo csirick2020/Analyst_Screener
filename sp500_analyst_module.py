@@ -34,7 +34,7 @@ for symbol in tick_symbols:
     if not previous_day_actions.empty:
         # Filter the DataFrame based on multiple conditions
         filtered_actions = previous_day_actions[(previous_day_actions['Action'].isin(['up', 'init'])) &
-                                                (previous_day_actions['ToGrade'].isin(['Strong Buy', 'Buy', 'Outperform', 'Overweight']))]
+                                                (previous_day_actions['ToGrade'].isin(['Buy', 'Outperform', 'Overweight']))]
         if not filtered_actions.empty:
             # Print the filtered DataFrame
             print(f"Analyst action(s) for {symbol.upper()} on {previous_date}:")
