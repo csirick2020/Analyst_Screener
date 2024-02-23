@@ -9,3 +9,5 @@ This is a simple analyst screener that returns analyst upgrades for a specified 
     <img src="https://github.com/csirick2020/Analyst_Screener/blob/main/Analyst_Screener.S%26P500.jpg" alt="JPG of program output...">
 </div>
 
+---
+This work is licensed under the [MIT License](https://github.com/csirick2020/Analyst_Screener/blob/main/LICENSE)
