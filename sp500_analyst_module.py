@@ -10,7 +10,7 @@ from sp500_ticker_retrieval import save_sp500_tickers, get_data_from_yahoo
 # Get the formatted list of S&P500 tickers
 ticker_list = get_data_from_yahoo()
 
-# Replace '.' with '-' in each ticker symbol
+# Replace '.' with '-' in each ticker symbol (that has a dot)
 ticker_list_hyphenated = [symbol.replace('.', '-') for symbol in ticker_list.split()]
 
 # Create a Tickers object with all ticker symbols
