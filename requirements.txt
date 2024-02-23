@@ -1,0 +1,8 @@
+# Python version
+python_version >=3.6
+
+# Packages
+beautifulsoup4
+pandas
+requests
+yfinance
