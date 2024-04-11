@@ -13,19 +13,12 @@ ticker_list = get_data_from_yahoo()
 # Replace '.' with '-' in each ticker symbol (that has a dot)
 ticker_list_hyphenated = [symbol.replace('.', '-') for symbol in ticker_list.split()]
 
-# Create a Tickers object with all ticker symbols
-sp500_data = yf.Tickers(' '.join(ticker_list_hyphenated))
-
-# Extract ticker symbols from the Tickers object
-tick_symbols = list(sp500_data.tickers.keys())
-
-print("Retrieving yesterday's analyst data for S&P500 stocks:")
-print()
 # Iterate through each ticker symbol and access its data
-for symbol in tick_symbols:
-    ticky = sp500_data.tickers[symbol]
-    actions = ticky.upgrades_downgrades
-    # Get the current date and calculate the date for the previous day
+for symbol in ticker_list_hyphenated:
+    ticky = yf.Ticker(symbol)
+    actions = ticky.upgrades_downgrades    
+
+# Get the current date and calculate the date for the previous day
     current_date = datetime.date.today()
     previous_date = current_date - datetime.timedelta(days=1)
     # Filter the DataFrame for entries from the previous day
