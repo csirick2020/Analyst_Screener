@@ -2,7 +2,7 @@
 
 ---
 
-This is a simple analyst screener that returns analyst upgrades for a specified date for all S&P500 stocks.
+<b>This is a simple analyst screener that returns analyst upgrades for a specified date for all S&P500 stocks.</b>
 
 ---
 
