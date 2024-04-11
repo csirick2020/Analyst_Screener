@@ -15,7 +15,7 @@ ticker_list_hyphenated = [symbol.replace('.', '-') for symbol in ticker_list.spl
 
 # Iterate through each ticker symbol and access its data
 for symbol in ticker_list_hyphenated:
-    ticky = yf.Ticker(symbol)
+    ticky = yf.Ticker(symbol.upper())
     actions = ticky.upgrades_downgrades    
 
 # Get the current date and calculate the date for the previous day
@@ -30,6 +30,6 @@ for symbol in ticker_list_hyphenated:
                                                 (previous_day_actions['ToGrade'].isin(['Buy', 'Outperform', 'Overweight']))]
         if not filtered_actions.empty:
             # Print the filtered DataFrame
-            print(f"Analyst action(s) for {symbol.upper()} on {previous_date}:")
+            print(f"Analyst action(s) for {symbol} on {previous_date}:")
             print(filtered_actions)
             print()
