@@ -20,20 +20,21 @@ def save_sp500_tickers():
     with open("sp500tickers.pickle", "wb") as f:
         pickle.dump(tickers, f)
 
+    print("Ticker list updated...")
+    print()
     return tickers
 
 # Create a function which either updates the list or uses our pickled version based on our choice
-def load_sp500_tickers(update_sp500=False):  # Set this to True to update
-    if update_sp500:
-        tickers = save_sp500_tickers()
-    else:
-        with open("/Path/To/Your/File/sp500tickers.pickle", "rb") as f:
-            tickers = pickle.load(f)
+def load_sp500_tickers(auto_update=True):  # Setting this to True auto-updates the list on every execution
+    if auto_update:
+        save_sp500_tickers()
+    with open("/home/name01/sp500tickers.pickle", "rb") as f:
+        tickers = pickle.load(f)
     # Clean up the data for yfinance.Tickers() method
     ticker_symbols = ' '.join([ticker.strip().lower() for ticker in tickers])
     return ticker_symbols
 
 
-# View the ticker list
 if __name__ == "__main__":
+    # View the ticker list
     print(load_sp500_tickers())
