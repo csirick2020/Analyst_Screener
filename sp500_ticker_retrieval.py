@@ -16,20 +16,18 @@ def save_sp500_tickers():
         tickers.append(ticker)  # Append that text (each ticker) to the tickers list
 
     # Pickle the list for reusability
-    # Be sure to update this list (by running the full code) periodically for changes in S&P holdings!
+    # Be sure to update this list periodically for changes in S&P holdings!
     with open("sp500tickers.pickle", "wb") as f:
         pickle.dump(tickers, f)
 
     return tickers
 
-# save_sp500_tickers()
-
-# Create a function which either updates the list or uses our pickle based on our choice
-def load_sp500_tickers(reload_sp500=False):  # Set this to True to update
-    if reload_sp500:
+# Create a function which either updates the list or uses our pickled version based on our choice
+def load_sp500_tickers(update_sp500=False):  # Set this to True to update
+    if update_sp500:
         tickers = save_sp500_tickers()
     else:
-        with open("/home/name01/sp500tickers.pickle", "rb") as f:
+        with open("/Path/To/Your/File/sp500tickers.pickle", "rb") as f:
             tickers = pickle.load(f)
     # Clean up the data for yfinance.Tickers() method
     ticker_symbols = ' '.join([ticker.strip().lower() for ticker in tickers])
@@ -39,4 +37,3 @@ def load_sp500_tickers(reload_sp500=False):  # Set this to True to update
 # View the ticker list
 if __name__ == "__main__":
     print(load_sp500_tickers())
-    print(type(load_sp500_tickers()))
