@@ -71,11 +71,10 @@ for symbol in ticker_list_hyphenated:
                     print(filtered_actions)
                     output_occurred = True
 
-    # Handle exceptions (general)
     except Exception as e:
         print(f"General error fetching data for {symbol}: {e}")
         output_occurred = True
 
-    # Print a blank line before the next symbol if there was any output...
+    # Print a blank line if there was any output
     if output_occurred:
         print()
