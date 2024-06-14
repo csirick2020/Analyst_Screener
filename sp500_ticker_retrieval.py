@@ -28,7 +28,7 @@ def save_sp500_tickers():
 def load_sp500_tickers(auto_update=True):  # Setting this to True auto-updates the list on every execution
     if auto_update:
         save_sp500_tickers()
-    with open("/home/name01/sp500tickers.pickle", "rb") as f:
+    with open("sp500tickers.pickle", "rb") as f:
         tickers = pickle.load(f)
     # Clean up the data for yfinance.Tickers() method
     ticker_symbols = ' '.join([ticker.strip().lower() for ticker in tickers])
