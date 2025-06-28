@@ -7,13 +7,14 @@ import requests
 def save_sp500_tickers():
     resp = requests.get('http://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
     soup = bs.BeautifulSoup(resp.text, 'lxml')
-    table = soup.find('table', {'class': 'wikitable sortable'})  # wikitable sortable comes from viewing the source code in browser
-
-    # Iterate through the table to create list of tickers
+    table = soup.find('table', {'id': 'constituents'})  # more precise than class matching
     tickers = []
-    for row in table.findAll('tr')[1:]:  # For each row after the header row (hence the [1:])
-        ticker = row.findAll('td')[0].text  # Grab the text of the table data ('td')
-        tickers.append(ticker)  # Append that text (each ticker) to the tickers list
+
+    for row in table.findAll('tr')[1:]:  # skip the header row
+        tds = row.findAll('td')
+        if tds:
+            ticker = tds[0].text.strip()
+            tickers.append(ticker)
 
     # Pickle the list for reusability
     # Be sure to update this list periodically for changes in S&P holdings!
@@ -22,7 +23,9 @@ def save_sp500_tickers():
 
     print("Ticker list updated...")
     print()
+
     return tickers
+
 
 # Create a function which either updates the list or uses our pickled version based on our choice
 def load_sp500_tickers(auto_update=True):  # Setting this to True auto-updates the list on every execution
