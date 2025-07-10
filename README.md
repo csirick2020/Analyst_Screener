@@ -21,7 +21,7 @@ In my code, I have chosen to filter the results by viewing only the previous day
 ---
 
 <div style="text-align:center;">
-    <img src="https://github.com/csirick2020/Analyst_Screener/blob/main/Analyst_Screener.S%26P500.jpg" alt="JPG of program output...">
+    <img src="https://github.com/csirick2020/Analyst_Screener/blob/main/resources/Analyst_Screener.S%26P500.jpg" alt="JPG of program output...">
 </div>
 
 ---
