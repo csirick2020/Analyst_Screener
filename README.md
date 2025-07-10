@@ -12,7 +12,7 @@ The next function includes the option to update the data (because S&P500 holding
 ---
 
 From there, we import that functionality to the sp500_analyst_module.py script which uses a for loop to make yfinance.Ticker() calls and access the upgrades_downgrades attribute of each ticker symbol.  
-In my code, I have chosen to filter the results by viewing only the previous day's upgrades (or coverage initiations) and only if those upgrades (or coverage initiations) are equal to 'Buy', 'Outperform', or 'Overweight'.
+In my code, I have chosen to filter the results by viewing only upgrades (or coverage initiations) if those upgrades (or coverage initiations) are equal to 'Buy', 'Outperform', or 'Overweight'.
 
 ---
 
