@@ -53,7 +53,9 @@ for symbol in ticker_list_hyphenated:
                 if not filtered_actions.empty:
                     # Print the filtered DataFrame
                     print(f"Analyst action(s) for {symbol} on {current_date}:")
+                    print()
                     print(filtered_actions)
+                    print()
                     output_occurred = True
 
         # If user chose to see yesterday's analyst activity
@@ -68,7 +70,9 @@ for symbol in ticker_list_hyphenated:
                 if not filtered_actions.empty:
                     # Print the filtered DataFrame
                     print(f"Analyst action(s) for {symbol} on {previous_date}:")
+                    print()
                     print(filtered_actions)
+                    print()
                     output_occurred = True
 
     except Exception as e:
