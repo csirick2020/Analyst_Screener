@@ -10,8 +10,8 @@ def save_sp500_tickers():
     table = soup.find('table', {'id': 'constituents'})  # more precise than class matching
     tickers = []
 
-    for row in table.findAll('tr')[1:]:  # skip the header row
-        tds = row.findAll('td')
+    for row in table.find_all('tr')[1:]:  # skip the header row
+        tds = row.find_all('td')
         if tds:
             ticker = tds[0].text.strip()
             tickers.append(ticker)
