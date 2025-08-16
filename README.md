@@ -69,10 +69,4 @@ pip install -r requirements.txt
 
 ---
 
-<div style="text-align:center;">
-    <img src="https://github.com/csirick2020/Analyst_Screener/blob/main/resources/Analyst_Screener.S%26P500.jpg" alt="Screenshot of program output">
-</div>
-
----
-
 This work is licensed under the [MIT License](https://github.com/csirick2020/Analyst_Screener/blob/main/LICENSE)
