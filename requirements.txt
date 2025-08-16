@@ -1,8 +1,14 @@
 # Python version
 python_version >= 3.6
 
-# Packages
-beautifulsoup4
-pandas
-requests
-yfinance
+# Core packages
+beautifulsoup4>=4.9.0
+pandas>=1.3.0
+requests>=2.25.0
+yfinance>=0.1.70
+
+# Standard library modules (included with Python)
+# - datetime (built-in)
+# - curses (built-in on Unix/Linux/macOS)
+# - re (built-in)
+# - pickle (built-in)
