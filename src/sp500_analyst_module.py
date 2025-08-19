@@ -107,7 +107,7 @@ def parse_date_input(date_string):
             return None, f"{date_obj.strftime('%B %d, %Y')} ({day_name}) was not a trading day."
         
         return date_obj, None
-        
+
     except ValueError as e:
         return None, f"Invalid date: {str(e)}"
 
@@ -133,10 +133,10 @@ def display_header(stdscr, title, date_str):
     stdscr.addstr(0, (width - len(title_text)) // 2, title_text, 
                   curses.color_pair(2) | curses.A_BOLD)
     
-    # Date
-    date_text = f"📅 {date_str}"
-    stdscr.addstr(1, (width - len(date_text)) // 2, date_text, 
-                  curses.color_pair(4))
+    # Date line
+    date_line = f"Checking analyst data for {date_str}"
+    stdscr.addstr(1, (width - len(date_line)) // 2, date_line,
+                    curses.color_pair(3))
     
     # Separator line
     separator = "═" * (width - 4)
@@ -145,7 +145,7 @@ def display_header(stdscr, title, date_str):
     stdscr.refresh()
     return 4  # Return starting line for content
 
-def display_analyst_data(stdscr, symbol, filtered_actions, current_line):
+def display_analyst_data(stdscr, symbol, filtered_actions, current_line, date_str):
     """Display styled analyst data for a symbol"""
     height, width = stdscr.getmaxyx()
     
@@ -156,7 +156,7 @@ def display_analyst_data(stdscr, symbol, filtered_actions, current_line):
         stdscr.getch()
         stdscr.clear()
         current_line = display_header(stdscr, "S&P 500 Analyst Screener", 
-                                    datetime.date.today().strftime("%B %d, %Y"))
+                                    date_str)
     
     # Symbol header
     symbol_text = f"🔍 {symbol}"
@@ -173,7 +173,7 @@ def display_analyst_data(stdscr, symbol, filtered_actions, current_line):
             stdscr.getch()
             stdscr.clear()
             current_line = display_header(stdscr, "S&P 500 Analyst Screener", 
-                                        datetime.date.today().strftime("%B %d, %Y"))
+                                        date_str)
         
         # Format the action info
         firm = row.get('Firm', 'N/A')
@@ -200,7 +200,7 @@ def display_analyst_data(stdscr, symbol, filtered_actions, current_line):
     stdscr.refresh()
     return current_line
 
-def display_error(stdscr, symbol, error, current_line):
+def display_error(stdscr, symbol, error, current_line, date_str):
     """Display styled error message"""
     height, width = stdscr.getmaxyx()
     
@@ -211,7 +211,7 @@ def display_error(stdscr, symbol, error, current_line):
         stdscr.getch()
         stdscr.clear()
         current_line = display_header(stdscr, "S&P 500 Analyst Screener", 
-                                    datetime.date.today().strftime("%B %d, %Y"))
+                                    date_str)
     
     error_text = f"❌ Error for {symbol}: {str(error)[:60]}..."
     stdscr.addstr(current_line, 2, error_text, curses.color_pair(5))
@@ -226,21 +226,24 @@ def get_date_input(stdscr):
     while True:
         # Clear screen and show menu
         stdscr.clear()
-        
+
         # Title
         title = "📊 S&P 500 Analyst Screener"
         stdscr.addstr(2, (width - len(title)) // 2, title, 
                       curses.color_pair(2) | curses.A_BOLD)
-        
+
         # Instructions
-        stdscr.addstr(5, (width - 50) // 2, "Enter the date to check for analyst activity:", 
+        instruction_line1 = "Enter the date to check for analyst activity:"
+        stdscr.addstr(4, (width - len(instruction_line1)) // 2, instruction_line1,
                       curses.color_pair(4))
-        stdscr.addstr(7, (width - 30) // 2, "📅 Format: MM-DD-YYYY", 
+        instruction_line2 = "📅 Format: MM-DD-YYYY"
+        stdscr.addstr(6, (width - len(instruction_line2)) // 2, instruction_line2,
                       curses.color_pair(3))
-        stdscr.addstr(8, (width - 40) // 2, "Example: 08-15-2024", 
+        instruction_line3 = "Example: 08-15-2024"
+        stdscr.addstr(8, (width - len(instruction_line3)) // 2, instruction_line3,
                       curses.color_pair(4))
-        
-        stdscr.addstr(10, (width - 20) // 2, "Date: ", 
+        instruction_line4 = "Date: "
+        stdscr.addstr(10, (width - len(instruction_line4)) // 2, instruction_line4,
                       curses.color_pair(4))
         
         stdscr.refresh()
@@ -251,9 +254,9 @@ def get_date_input(stdscr):
         
         # Get input
         input_y = 10
-        input_x = (width - 20) // 2 + 6
+        input_x = ((width - len(instruction_line4)) // 2) + 6
         stdscr.move(input_y, input_x)
-        
+
         try:
             date_input = stdscr.getstr(input_y, input_x, 10).decode('utf-8')
         except:
@@ -298,7 +301,7 @@ def main_curses(stdscr):
     
     # Display header with selected date
     date_str = selected_date.strftime("%B %d, %Y")
-    current_line = display_header(stdscr, f"Checking analyst data for {date_str}", date_str)
+    current_line = display_header(stdscr, "S&P 500 Analyst Screener", date_str)
     
     # Progress indicator
     total_tickers = len(ticker_list_hyphenated)
@@ -331,16 +334,16 @@ def main_curses(stdscr):
                 filtered_actions = day_actions[(day_actions['Action'].isin(['up', 'init'])) &
                                              (day_actions['ToGrade'].isin(['Buy', 'Outperform', 'Overweight']))]
                 if not filtered_actions.empty:
-                    current_line = display_analyst_data(stdscr, symbol, filtered_actions, current_line)
+                    current_line = display_analyst_data(stdscr, symbol, filtered_actions, current_line, date_str)
 
         except Exception as e:
-            current_line = display_error(stdscr, symbol, e, current_line)
+            current_line = display_error(stdscr, symbol, e, current_line, date_str)
     
     # Final message
     height, width = stdscr.getmaxyx()
     final_text = "✅ Screening complete! Press any key to exit..."
     stdscr.addstr(height - 2, (width - len(final_text)) // 2, final_text, 
-                  curses.color_pair(2) | curses.A_BLINK)
+                  curses.color_pair(3))
     stdscr.refresh()
     stdscr.getch()
 
