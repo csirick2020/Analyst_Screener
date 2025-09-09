@@ -5,16 +5,31 @@ import requests
 
 # Function to retrieve data from webpage and turn into BeautifulSoup object
 def save_sp500_tickers():
-    resp = requests.get('http://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
+    # Set a User-Agent header to mimic a web browser
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'}
+
+    # Use headers in the request
+    resp = requests.get('http://en.wikipedia.org/wiki/List_of_S%26P_500_companies', headers=headers)
+
+    # Check if the request was successful
+    if resp.status_code != 200:
+        print(f"Error: Failed to retrieve the webpage. Status code: {resp.status_code}")
+        return []
+
     soup = bs.BeautifulSoup(resp.text, 'lxml')
     table = soup.find('table', {'id': 'constituents'})  # more precise than class matching
     tickers = []
 
-    for row in table.find_all('tr')[1:]:  # skip the header row
-        tds = row.find_all('td')
-        if tds:
-            ticker = tds[0].text.strip()
-            tickers.append(ticker)
+    # Make sure table was found before trying to loop through it
+    if table:
+        for row in table.find_all('tr')[1:]:  # skip the header row
+            tds = row.find_all('td')
+            if tds:
+                ticker = tds[0].text.strip()
+                # Some tickers on the page might have a newline, .replace() cleans it up
+                tickers.append(ticker.replace('\n', ''))
+    else:
+        print("Error: Could not find the constituents table. The page structure may have changed.")
 
     # Pickle the list for reusability
     # Be sure to update this list periodically for changes in S&P holdings!
