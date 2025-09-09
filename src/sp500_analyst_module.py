@@ -1,5 +1,6 @@
 # Analyst Screener (S&P 500)
 import datetime
+from dateutil.relativedelta import relativedelta
 import yfinance as yf
 import pandas as pd
 import curses
@@ -100,7 +101,12 @@ def parse_date_input(date_string):
         # Check if it's a future date
         if date_obj > datetime.date.today():
             return None, "Cannot check future dates."
-        
+
+        # Limit data to 10 years
+        TEN_YEARS_AGO = datetime.date.today() - relativedelta(years=10)
+        if date_obj < TEN_YEARS_AGO:
+            return None, "Selected date must be within the last ten years."
+
         # Check if it's a trading day
         if not is_trading_day(date_obj):
             day_name = date_obj.strftime("%A")
