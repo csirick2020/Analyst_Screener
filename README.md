@@ -12,7 +12,7 @@
 - **🏛️ Trading Day Validation**: Automatically validates against US stock market holidays and weekends
 - **🎨 Styled Terminal Interface**: Professional curses-based UI with color coding and visual indicators
 - **📈 Real-time Progress**: Live progress tracking while processing all S&P500 stocks
-- **🔍 Smart Filtering**: Shows only positive analyst actions (upgrades and initiations to Buy/Outperform/Overweight)
+- **🔍 Smart Filtering**: Shows only positive analyst actions (upgrades and initiations to Buy/Strong Buy/Outperform/Overweight)
 
 ---
 
@@ -20,7 +20,7 @@
 
 The `sp500_ticker_retrieval.py` script uses the requests module and BeautifulSoup4 to scrape a regularly maintained Wikipedia page for all 503 tickers. It then "pickles" that list (storing it on your computer) with the option to update the data as S&P500 holdings change over time.
 
-The main `sp500_analyst_module.py` script imports this functionality and uses a for loop to make yfinance.Ticker() calls, accessing the upgrades_downgrades attribute of each ticker symbol. The program filters results to show only upgrades or coverage initiations rated as 'Buy', 'Outperform', or 'Overweight'.
+The main `sp500_analyst_module.py` script imports this functionality and uses a for loop to make yfinance.Ticker() calls, accessing the upgrades_downgrades attribute of each ticker symbol. The program filters results to show only upgrades or coverage initiations rated as 'Buy', 'Strong Buy', 'Outperform', or 'Overweight'.
 
 ### 🎯 Enhanced User Experience
 
