@@ -338,7 +338,7 @@ def main_curses(stdscr):
             # Filter for positive actions only
             if not day_actions.empty:
                 filtered_actions = day_actions[(day_actions['Action'].isin(['up', 'init'])) &
-                                             (day_actions['ToGrade'].isin(['Buy', 'Strong Buy', 'Outperform', 'Overweight']))]
+                                             (day_actions['ToGrade'].isin(['Buy', 'Strong Buy', 'Outperform', 'Overweight', 'Market Outperform', 'Accumulate', 'Positive']))]
                 if not filtered_actions.empty:
                     current_line = display_analyst_data(stdscr, symbol, filtered_actions, current_line, date_str)
 
